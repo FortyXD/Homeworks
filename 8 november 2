@@ -1,0 +1,45 @@
+#include <stdio.h> 
+  
+int main() 
+{ 
+    int v, x, w, y,z; 
+  
+    
+    scanf("%d", &x); 
+  scanf("%d", &v);
+  scanf("%d", &w);
+  scanf("%d", &y);
+  scanf("%d", &z);
+    if (v >= x && v >= w && v >= y && v >= z ) 
+        printf("%d max.", v); 
+  
+    if (x >= v && x >= w && x >= y && x >= z ) 
+        printf("%d max.", x); 
+  
+    if (w >= x && w >= x && w >= y && w >= z ) 
+        printf("%d max.", w);
+        
+    if (y >= x && y >= w && y >= v && y >= z ) 
+        printf("%d max.", y);
+    if (z >= x && z >= w && z >= y && z >= v ) 
+        printf("%d max",z);
+        
+        printf(",");
+        
+         if (v <= x && v <= w && v <= y && v <= z ) 
+        printf("%d min.", v); 
+  
+    if (x <= v && x <= w && x <= y && x <= z ) 
+        printf("%d min.", x); 
+  
+    if (w <= x && w <= x && w <= y && w <= z ) 
+        printf("%d min.", w);
+        
+    if (y <= x && y <= w && y <= v && y <= z ) 
+        printf("%d min.", y);
+    if (z <= x && z <= w && z <= y && z <= v ) 
+        printf("%d min",z);
+        
+        
+    return 0; 
+} 
