@@ -1,10 +1,14 @@
 #include <stdio.h>
 
 int main()
-{ int a,b,c;
-    scanf("%d",&a);
-    scanf("%d",&b);
-     scanf("%d",&c);
-    printf("%d\n",b*b-4*a*c);
+{int a,b,c,x,y,z;
+ scanf("%d" ,&a);
+scanf("%d" ,&b);
+scanf("%d" ,&c);
+y=((-b+sqrt(b*b-4*a*c))/2*a);
+z=((-b-sqrt(b*b-4*a*c))/2*a);
+    printf("%d\n",y);
+    printf("%d\n",z);
+
     return 0;
 }
