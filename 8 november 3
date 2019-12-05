@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main()
+{ int d,c,a,b,m;
+    printf(" напишите колво этажей пирамиды ");
+    scanf("%d/n" , &c);
+    a=c;
+    for (d=0; d<=c; d++){
+        b=d;
+        m=a-b;
+        for (d=0;d<m;d++){
+            printf(" ");
+        }
+        for (d=0;d<b;d++){
+            printf(" *");
+        }
+        
+        printf("\n"); 
+    }
+   
+    
+    return 0;
+}
