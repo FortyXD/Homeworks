@@ -1,14 +1,25 @@
 #include <stdio.h>
 
 int main()
-{int a,b,c,x,y,z;
- scanf("%d" ,&a);
-scanf("%d" ,&b);
-scanf("%d" ,&c);
-y=((-b+sqrt(b*b-4*a*c))/2*a);
-z=((-b-sqrt(b*b-4*a*c))/2*a);
-    printf("%d\n",y);
-    printf("%d\n",z);
-
+{float a,b,c,D,x1,x2,e;
+   printf("Введите переменные a,b,c\n");
+   scanf("%f\n %f\n %f\n", &a,&b,&c);
+   printf("a: %f\n b: %f\n c: %f\n", a,b,c);
+   D=b*b-4*a*c;
+   
+   if (D<0) {
+       printf("выражение невозможно\n");
+   }
+   else {
+       e= sqrt(D);
+       x1=(-b+e)/2*a;
+       x1=(-b-e)/2*a;
+        printf("x1: %f\n x2: %f\n", x1,x2);
+       
+   }
+   
+       
+       
+   
     return 0;
 }
