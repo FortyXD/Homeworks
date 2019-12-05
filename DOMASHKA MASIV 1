@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int main()
+{int mass[100], n, c, d ;
+
+  printf("ведите количество числа\n");
+  scanf("%d", &n);
+
+  printf("ведите %d целых чисел\n", n);
+
+  for (c = 0; c < n; c++) {
+    scanf("%d", &mass[c]);}
+    
+  for (int i = 0; i < c - 1; i++) {
+
+        int min_i = i;
+
+    for (int j = i + 1; j < c; j++) {
+        if (mass[j] < mass[min_i]) {
+            min_i = j;
+        }
+    }
+  
+    int temp = mass[i];
+    mass[i] = mass[min_i];
+    mass[min_i] = temp;
+}   for (c = 0; c < n; c++){
+    printf("%d\n", mass[c]);
+}
+    return 0;
+}
