@@ -1,0 +1,45 @@
+ #include<stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
+#include <string.h>
+ 
+void change(int m[],int k, int n1, int n2)
+{
+  int i,p;
+  for(i=1;i<k;i++)
+    p = m[n1];
+  m[n1] = m[n2];
+  m[n2] = p;
+}
+ void invers (char ch[20], int i,n)
+ {
+    n=0;
+  while(i>=0)
+ {while(n>=0){
+change(ch[20],i,i,n)
+  i=i-1;
+  n=n+1;
+  }}
+   void invers2 (char ch[20], int i,n,o)
+ {
+    n=0;
+  while(i<=0)
+ {while(n<=0){
+change(ch[20],i,i,n)
+  i=i-1;
+  n=n+1;
+  }}
+ }
+     
+ 
+int main()
+{  int ch[20],i;
+    
+    printf("Vvedite slovo  \n"); 
+    scanf("%s", &ch); 
+    scanf("%d\n",i);
+invers (ch[20],strlen(ch));
+invers (ch[20],strlen(ch)-i);
+invers2 (ch[20],strlen(ch)-i);
+ return 0;
+}
