@@ -89,7 +89,7 @@ namespace ConsoleApp6
         string country="нет данных";
             string Organization = "нет данных";
             Cl:
-        Console.WriteLine("введите то что вы хотите добавить в новый книгу (Name)-имя,(Surname)-фамилия,(Country)-страна,(Number)-номер и (End)чтобы закончить создание контакта (middle name)-для отчества и (Organization)-организация ");
+      Console.WriteLine("введите то что вы хотите добавить в новый книгу (Name)-имя,(Surname)-фамилия,(Country)-страна,(Number)-номер и (middle name)-для отчества и (Organization)-организация (End)чтобы закончить создание контакта. ");
             string c = Console.ReadLine();
             if (c == "Name") { Console.WriteLine("введите имя"); string a = Console.ReadLine(); name = a; goto Cl; }
             else if (c == "Surname") { Console.WriteLine("введите фамилию"); string a = Console.ReadLine(); surname = a;goto Cl; }
