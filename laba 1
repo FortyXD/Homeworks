@@ -5,7 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 
 namespace ConsoleApp6
-{public class kniga 
+{
+    public class kniga
     {
         public long Number;
         public string Surname;
@@ -16,12 +17,14 @@ namespace ConsoleApp6
         public string Country;
     }
     class Program
-    { public static List<kniga> list = new List<kniga>();
+    {
+        public static List<kniga> list = new List<kniga>();
         static void Main(string[] args)
-        { Main:
+        {
+        Main:
             Console.WriteLine("привет, я твоя записная книга . я могу просматривать все учетные записи(Showall), просмотривать отдельную запись (Show),редактировать данные(Edit), создавать новую запись(Create),или удалить запись (Remove),закрытие программы(Exit)");
             Console.WriteLine("введите одну из команд");
-            Read:
+        Read:
             string c = Console.ReadLine();
             if (c == "Showall") { Showall(list); goto Main; }
             else if (c == "Show") { Show(list); goto Main; }
@@ -29,85 +32,101 @@ namespace ConsoleApp6
             else if (c == "Remove") { Remove(list); goto Main; }
             else if (c == "Edit") { Edit(list); goto Main; }
             else if (c == "Exit") { }
-            else { Console.WriteLine("вы ввледи неправильную команду,повторите еще раз!!");goto Read; }
+            else { Console.WriteLine("вы ввледи неправильную команду,повторите еще раз!!"); goto Read; }
         }
 
 
         public static void Edit(List<kniga> list)
         {
-            ew:
-            Console.WriteLine("введите какую строку хотитет изменить(цифрами)");
-            foreach (kniga item in list) { Console.WriteLine($"имя: {item.Name}. Фамилия {item.Surname}.номер {item.Number} "); }
-            int c = Convert.ToInt32(Console.ReadLine());
-            if (c <= list.Count && c > 0)
-            { Cl:
-                Console.WriteLine("введите то что вы хотите изменить в новый книгу (Name)-имя,(Surname)-фамилия,(Country)-страна,(Number)-номер (middle name)-для отчества и (Organization)-организация и (End)чтобы закончить создание контакта ");
-                string a = Console.ReadLine();
+        ew:
 
-                if (a == "Name") { Console.WriteLine("введите имя"); string o = Console.ReadLine();list[c - 1].Name = o; goto Cl; }
-                else if (a == "Surname") { Console.WriteLine("введите фамилию"); string o = Console.ReadLine(); string ooo = Console.ReadLine(); list[c - 1].Surname = ooo; goto Cl; }
-                else if (a == "Country") { Console.WriteLine("введите страну"); string o = Console.ReadLine(); string oo = Console.ReadLine(); list[c - 1].Country = oo; goto Cl; }
-                else if (a == "Number") { Console.WriteLine("введите номер"); long o = Convert.ToInt64(Console.ReadLine()); list[c - 1].Number = o;  goto Cl; }
-                else if (a == "middle name") { Console.WriteLine("введите отчество"); string o = Console.ReadLine(); list[c - 1].middle_name = a; goto Cl; }
-                else if (a == "Organization") { Console.WriteLine("введите организацию"); string o = Console.ReadLine(); list[c - 1].organization = a; goto Cl; }
-                else if (a == "End") {  }
-                else { Console.WriteLine("введена неправильная команда"); goto Cl; }
+            if (list.Count == 0) { Console.WriteLine("тут пуста!!!сначало создайте обекты"); }
+            else
+            {
+                Console.WriteLine("введите какую строку хотитет изменить(цифрами)");
+                foreach (kniga item in list) { Console.WriteLine($"имя: {item.Name}. Фамилия {item.Surname}.номер {item.Number} "); }
+                int c = Convert.ToInt32(Console.ReadLine());
+                if (c <= list.Count && c > 0)
+                {
+                Cl:
+                    Console.WriteLine("введите то что вы хотите изменить в новый книгу (Name)-имя,(Surname)-фамилия,(Country)-страна,(Number)-номер (middle name)-для отчества и (Organization)-организация и (End)чтобы закончить создание контакта ");
+                    string a = Console.ReadLine();
+
+                    if (a == "Name") { Console.WriteLine("введите имя"); string o = Console.ReadLine(); list[c - 1].Name = o; goto Cl; }
+                    else if (a == "Surname") { Console.WriteLine("введите фамилию"); string o = Console.ReadLine(); string ooo = Console.ReadLine(); list[c - 1].Surname = ooo; goto Cl; }
+                    else if (a == "Country") { Console.WriteLine("введите страну"); string o = Console.ReadLine(); string oo = Console.ReadLine(); list[c - 1].Country = oo; goto Cl; }
+                    else if (a == "Number") { Console.WriteLine("введите номер"); long o = Convert.ToInt64(Console.ReadLine()); list[c - 1].Number = o; goto Cl; }
+                    else if (a == "middle name") { Console.WriteLine("введите отчество"); string o = Console.ReadLine(); list[c - 1].middle_name = a; goto Cl; }
+                    else if (a == "Organization") { Console.WriteLine("введите организацию"); string o = Console.ReadLine(); list[c - 1].organization = a; goto Cl; }
+                    else if (a == "End") { }
+                    else { Console.WriteLine("введена неправильная команда"); goto Cl; }
 
 
+                }
+                else { Console.WriteLine("такой строки нет введите еще раз"); goto ew; }
             }
-            else { Console.WriteLine("такой строки нет введите еще раз"); goto ew; }
         }
 
-    public static void Showall(List<kniga> list)
-        { if (list.Count == 0) { Console.WriteLine("тут пуста!!!сначало создайте обекты"); }
-            else 
+        public static void Showall(List<kniga> list)
+        {
+            if (list.Count == 0) { Console.WriteLine("тут пуста!!!сначало создайте обекты"); }
+            else
             {
                 foreach (kniga item in list) { Console.WriteLine($"имя: {item.Name}. Фамилия {item.Surname}.номер {item.Number} "); }
             }
-        
-        
+
+
         }
-    public static void Show(List<kniga> list) 
+        public static void Show(List<kniga> list)
         {
         ew:
-            Console.WriteLine("напишите про какую книгу вы бы хотели узнать поддробнее");
-            foreach (kniga item in list) { Console.WriteLine($"имя: {item.Name}. Фамилия {item.Surname}.номер {item.Number} "); }
-            int c = Convert.ToInt32(Console.ReadLine());
-            if (c <= list.Count && c > 0) { Console.WriteLine($"имя: {list[c-1].Name}. Фамилия {list[c-1].Surname},отчество{list[c - 1].middle_name}.номер {list[c-1].Number}. страна {list[c-1].Country} , организация {list[c - 1].organization}"); }
-            else { Console.WriteLine("такой строки нет введите еще раз"); goto ew; }
-
+            if (list.Count == 0) { Console.WriteLine("тут пуста!!!сначало создайте обекты"); }
+            else
+            {
+                Console.WriteLine("напишите про какую книгу вы бы хотели узнать поддробнее");
+                foreach (kniga item in list) { Console.WriteLine($"имя: {item.Name}. Фамилия {item.Surname}.номер {item.Number} "); }
+                int c = Convert.ToInt32(Console.ReadLine());
+                if (c <= list.Count && c > 0) { Console.WriteLine($"имя: {list[c - 1].Name}. Фамилия {list[c - 1].Surname},отчество{list[c - 1].middle_name}.номер {list[c - 1].Number}. страна {list[c - 1].Country} , организация {list[c - 1].organization}"); }
+                else { Console.WriteLine("такой строки нет введите еще раз"); goto ew; }
+            }
         }
 
 
 
 
-    public static void Create(List<kniga> list) 
-        { string mid ="нет данных";
-        long number=0;
-        string surname="нет данный";
-        string name="нет данных";
-        string country="нет данных";
+        public static void Create(List<kniga> list)
+        {
+            string mid = "нет данных";
+            long number = 0;
+            string surname = "нет данный";
+            string name = "нет данных";
+            string country = "нет данных";
             string Organization = "нет данных";
-            Cl:
-      Console.WriteLine("введите то что вы хотите добавить в новый книгу (Name)-имя,(Surname)-фамилия,(Country)-страна,(Number)-номер и (middle name)-для отчества и (Organization)-организация (End)чтобы закончить создание контакта. ");
+        Cl:
+            Console.WriteLine("введите то что вы хотите добавить в новый книгу (Name)-имя,(Surname)-фамилия,(Country)-страна,(Number)-номер и (middle name)-для отчества и (Organization)-организация (End)чтобы закончить создание контакта. ");
             string c = Console.ReadLine();
             if (c == "Name") { Console.WriteLine("введите имя"); string a = Console.ReadLine(); name = a; goto Cl; }
-            else if (c == "Surname") { Console.WriteLine("введите фамилию"); string a = Console.ReadLine(); surname = a;goto Cl; }
+            else if (c == "Surname") { Console.WriteLine("введите фамилию"); string a = Console.ReadLine(); surname = a; goto Cl; }
             else if (c == "Country") { Console.WriteLine("введите страну"); string a = Console.ReadLine(); country = a; goto Cl; }
             else if (c == "Number") { Console.WriteLine("введите номер"); long a = Convert.ToInt64(Console.ReadLine()); number = a; goto Cl; }
             else if (c == "middle name") { Console.WriteLine("введите отчество"); string a = Console.ReadLine(); mid = a; goto Cl; }
             else if (c == "Organization") { Console.WriteLine("введите организацию"); string a = Console.ReadLine(); Organization = a; goto Cl; }
-            else if (c == "End") { list.Add(new kniga { Name = name,Surname=surname,Country=country,Number=number,middle_name=mid,organization=Organization }) ; }
-            else { Console.WriteLine("введена неправильная команда");goto Cl; }
+            else if (c == "End") { list.Add(new kniga { Name = name, Surname = surname, Country = country, Number = number, middle_name = mid, organization = Organization }); }
+            else { Console.WriteLine("введена неправильная команда"); goto Cl; }
         }
-    public static void Remove(List<kniga> list)
-        { ew:
-            Console.WriteLine("напишите какую строчку надо удалить");
-            foreach (kniga item in list) { Console.WriteLine($"имя: {item.Name}. Фамилия {item.Surname}.номер {item.Number} "); }
-            int c =Convert.ToInt32( Console.ReadLine());
-            if (c <= list.Count && c > 0) { list.Remove(list[c - 1]); }
-            else { Console.WriteLine("такой строки нет введите еще раз");goto ew; }
+        public static void Remove(List<kniga> list)
+        {
+        ew:
+            if (list.Count == 0) { Console.WriteLine("тут пуста!!!сначало создайте обекты"); }
+            else
+            {
+                Console.WriteLine("напишите какую строчку надо удалить");
+                foreach (kniga item in list) { Console.WriteLine($"имя: {item.Name}. Фамилия {item.Surname}.номер {item.Number} "); }
+                int c = Convert.ToInt32(Console.ReadLine());
+                if (c <= list.Count && c > 0) { list.Remove(list[c - 1]); }
+                else { Console.WriteLine("такой строки нет введите еще раз"); goto ew; }
+            }
         }
-    }  
- 
+    }
+
 }
