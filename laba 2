@@ -1,0 +1,339 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.Data;
+using System.Net;
+using System.IO;
+
+namespace ReadExcel_And_BindToDataGrid
+{
+    /// <summary>
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            System.Windows.Forms.MessageBox.Show("уважаемый юзер . я рад приветствовать тебя в моей  проге! к сожалению я тут оптимизацию не завез так что вас ждет некоторое ожидание))!!");
+            string md = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (System.IO.File.Exists(md + @"\thrlist.xlsx"))
+            {
+                 string txt =  md + @"\thrlist.xlsx";
+
+                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+              
+                Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Open(txt, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1); ;
+                Microsoft.Office.Interop.Excel.Range excelRange = excelSheet.UsedRange;
+
+                string strCellData = "";
+                double douCellData;
+                int rowCnt = 0;
+                int colCnt = 0;
+
+                DataTable dt = new DataTable();
+                for (colCnt = 1; colCnt <= 2; colCnt++)
+                {
+                    string strColumn = "";
+                    strColumn = (string)(excelRange.Cells[1, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                    dt.Columns.Add(strColumn, typeof(string));
+                }
+
+                for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
+                {
+                    string strData = "";
+                    for (colCnt = 1; colCnt <= 2; colCnt++)
+                    {
+                        try
+                        {
+                            strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                            strData += strCellData + "|";
+                        }
+                        catch (Exception ex)
+                        {
+                            douCellData = (excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                            strData += douCellData.ToString() + "|";
+                        }
+                    }
+                    strData = strData.Remove(strData.Length - 1, 1);
+                    dt.Rows.Add(strData.Split('|'));
+                }
+
+                dtGrid.ItemsSource = dt.DefaultView;
+
+                excelBook.Close(true, null, null);
+                excelApp.Quit();
+            }
+
+           
+            else 
+            { System.Windows.Forms.MessageBox.Show("Внимание,в папке мои документы не был обнаружен нужный файл к сожалению мы не можем автоматически вывести таблицу . установите сначало файл");
+            }
+         }
+
+        private void btnOpen_Click(object sender, RoutedEventArgs e)//для краткого содержания
+        {
+            string md = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (System.IO.File.Exists(md + @"\thrlist.xlsx"))
+            {
+
+
+                string txt = md + @"\thrlist.xlsx";
+
+                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+
+                Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Open(txt, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1); ;
+                Microsoft.Office.Interop.Excel.Range excelRange = excelSheet.UsedRange;
+
+                string strCellData = "";
+                double douCellData;
+                int rowCnt = 0;
+                int colCnt = 0;
+
+                DataTable dt = new DataTable();
+                for (colCnt = 1; colCnt <= 2; colCnt++)
+                {
+                    string strColumn = "";
+                    strColumn = (string)(excelRange.Cells[1, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                    dt.Columns.Add(strColumn, typeof(string));
+                }
+
+                for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
+                {
+                    string strData = "";
+                    for (colCnt = 1; colCnt <= 2; colCnt++)
+                    {
+                        try
+                        {
+                            strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                            strData += strCellData + "|";
+                        }
+                        catch (Exception ex)
+                        {
+                            douCellData = (excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                            strData += douCellData.ToString() + "|";
+                        }
+                    }
+                    strData = strData.Remove(strData.Length - 1, 1);
+                    dt.Rows.Add(strData.Split('|'));
+                }
+
+                dtGrid.ItemsSource = dt.DefaultView;
+
+                excelBook.Close(true, null, null);
+                excelApp.Quit();
+            }
+            else { System.Windows.Forms.MessageBox.Show("документ не скачан!!!!!!!"); }
+
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)//для скачивания
+        {
+
+            string md = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            new WebClient().DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", md + @"\thrlist.xlsx");
+            System.Windows.Forms.MessageBox.Show("этот файл был успешно скачен в папку ваши документы)))");
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)// для удаления
+        {
+            string md = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (System.IO.File.Exists(md + @"\thrlist.xlsx"))
+            {
+               
+                File.Delete(md + @"\thrlist.xlsx");
+                System.Windows.Forms.MessageBox.Show("xlsx Файл в папке мои документы был успешно удален)))");
+            }
+            else { System.Windows.Forms.MessageBox.Show("он и так уже был удален");}
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)// тут полный вариант просмотра
+        {
+            {
+                OpenFileDialog openfile = new OpenFileDialog();
+                openfile.DefaultExt = ".xlsx";
+                openfile.Filter = "(.xlsx)|*.xlsx";
+                var browsefile = openfile.ShowDialog();
+
+                if (browsefile == true)
+                {
+                  
+                    string txt = openfile.FileName;
+
+                    Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                    Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Open(txt, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                    Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1); ;
+                    Microsoft.Office.Interop.Excel.Range excelRange = excelSheet.UsedRange;
+
+                    string strCellData = "";
+                    double douCellData;
+                    int rowCnt = 0;
+                    int colCnt = 0;
+
+                    DataTable dt = new DataTable();
+                    for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                    {
+                        string strColumn = "";
+                        strColumn = (string)(excelRange.Cells[1, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                        dt.Columns.Add(strColumn, typeof(string));
+                    }
+
+                    for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
+                    {
+                        string strData = "";
+                        for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                        {
+                            try
+                            {
+                                strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                                strData += strCellData + "|";
+                            }
+                            catch (Exception ex)
+                            {
+                                douCellData = (excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                                strData += douCellData.ToString() + "|";
+                            }
+                        }
+                        strData = strData.Remove(strData.Length - 1, 1);
+                        dt.Rows.Add(strData.Split('|'));
+                    }
+
+                    dtGrid.ItemsSource = dt.DefaultView;
+
+                    excelBook.Close(true, null, null);
+                    excelApp.Quit();
+                }
+            }
+
+            
+        }
+      
+        private void Button_Click_3(object sender, RoutedEventArgs e)//для нахождение информации о твоей мамке))
+        {   string md = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (System.IO.File.Exists(md + @"\thrlist.xlsx"))
+            {
+                if (dtGrid.SelectedItem != null)
+                {
+                    int a = dtGrid.SelectedIndex + 2;
+
+
+                    string txt = md + @"\thrlist.xlsx";
+
+                    Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                    Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Open(txt, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                    Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1); ;
+                    Microsoft.Office.Interop.Excel.Range excelRange = excelSheet.UsedRange;
+
+                    string strCellData = "";
+                    double douCellData;
+                    int rowCnt = 0;
+                    int colCnt = 0;
+
+                    DataTable dt = new DataTable();
+                    for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                    {
+                        string strColumn = "";
+                        strColumn = (string)(excelRange.Cells[1, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                        dt.Columns.Add(strColumn, typeof(string));
+                    }
+
+                    for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
+                    {
+                        string strData = "";
+                        for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                        {
+                            try
+                            {
+                                strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                                strData += strCellData + "- ";
+                            }
+                            catch (Exception ex)
+                            {
+                                douCellData = (excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                                strData += douCellData.ToString() + "- ";
+                            }
+                        }
+                        strData = strData.Remove(strData.Length - 1, 1);
+                        dt.Rows.Add(strData.Split('|'));
+                        if (rowCnt == a) { System.Windows.Forms.MessageBox.Show(strData); }
+                    }
+
+
+
+                    excelBook.Close(true, null, null);
+                    excelApp.Quit();
+
+                }
+                else { System.Windows.Forms.MessageBox.Show("я тут строку не выделил"); }
+            }
+            else { System.Windows.Forms.MessageBox.Show("локальный файл xmls не скачен установите его  чтобы работала данная функция");}
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            string md = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (System.IO.File.Exists(md + @"\thrlist.xlsx"))
+            {
+                string txt = md + @"\thrlist.xlsx";
+
+                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook excelBook = excelApp.Workbooks.Open(txt, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                Microsoft.Office.Interop.Excel.Worksheet excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets.get_Item(1); ;
+                Microsoft.Office.Interop.Excel.Range excelRange = excelSheet.UsedRange;
+
+                string strCellData = "";
+                double douCellData;
+                int rowCnt = 0;
+                int colCnt = 0;
+
+                DataTable dt = new DataTable();
+                for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                {
+                    string strColumn = "";
+                    strColumn = (string)(excelRange.Cells[1, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                    dt.Columns.Add(strColumn, typeof(string));
+                }
+
+                for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
+                {
+                    string strData = "";
+                    for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                    {
+                        try
+                        {
+                            strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                            strData += strCellData + "|";
+                        }
+                        catch (Exception ex)
+                        {
+                            douCellData = (excelRange.Cells[rowCnt, colCnt] as Microsoft.Office.Interop.Excel.Range).Value2;
+                            strData += douCellData.ToString() + "|";
+                        }
+                    }
+                    strData = strData.Remove(strData.Length - 1, 1);
+                    dt.Rows.Add(strData.Split('|'));
+                }
+
+                dtGrid.ItemsSource = dt.DefaultView;
+
+                excelBook.Close(true, null, null);
+                excelApp.Quit();
+
+
+            }
+            else System.Windows.Forms.MessageBox.Show("Файл не скачан!");
+        }
+    }
+}
